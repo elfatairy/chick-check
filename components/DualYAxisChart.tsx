@@ -8,6 +8,7 @@ import {
 import { ref, onValue, query, orderByChild, startAt, endBefore, get, onChildAdded } from "@firebase/database";
 import { db } from '@/firebaseConfig';
 import { router } from 'expo-router';
+import { normalize } from '@/constants/normalizer';
 
 const DualYAxisChart = () => {
     const [tempData, setTempData] = useState<lineDataItem[] | undefined>();
@@ -80,23 +81,45 @@ const DualYAxisChart = () => {
                 <Text style={{ color: "#FC9601" }}>Temperature (celesius)</Text>
             </View>
             {
-                amoniaData ?
-                    <Text>
-                        {amoniaData[0].value}
-                    </Text> :
-                    <Text>
-                        Loading...
-                    </Text>
+                !amoniaData &&
+                <Text>
+                    Loading...
+                </Text>
             }
-            <TouchableOpacity onPress={() => { setShowGraph(true); setTimeout(() => {setShowGraph(false)}, 5000) }}>
-                <Text>Show Graph</Text>
-            </TouchableOpacity>
             {
-                showGraph && amoniaData ?
+                amoniaData ?
                     <LineChart
                         height={180}
-                        data={[{value: 0}, {value: 1}, {value: 6}, {value: 3}]}
-                        
+                        data={amoniaData}
+
+                        thickness={2}
+                        hideRules
+                        curvature={1}
+                        // rotateLabel
+                        initialSpacing={0}
+                        adjustToWidth
+                        spacing={normalize(22.5)}
+                        color="#3332c9"
+                        yAxisColor="#3332c9"
+                        yAxisThickness={2}
+                        xAxisLabelTextStyle={{ width: 80, marginLeft: -20, fontSize: normalize(15) }}
+                        xAxisIndicesHeight={5}
+                        xAxisIndicesWidth={1}
+                        disableScroll
+                        noOfSections={4}
+                        secondaryData={tempData}
+                        secondaryYAxis={{
+                            yAxisColor: "#FC9601",
+                            yAxisLabelSuffix: '°'
+
+                        }}
+                        hideDataPoints
+                        secondaryLineConfig={{
+                            color: "#FC9601"
+                        }}
+                        showXAxisIndices={false}
+
+                        showFractionalValues={false}
                     /> : null
             }
         </View>

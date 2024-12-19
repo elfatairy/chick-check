@@ -8,6 +8,8 @@ import { Colors } from '@/constants/Colors';
 import { LineChart, LineChartBicolor, lineDataItem } from 'react-native-gifted-charts';
 import DualYAxisChart from '@/components/DualYAxisChart';
 import { normalize } from '@/constants/normalizer';
+import React from 'react';
+import { scheduleNotificationAsync } from 'expo-notifications';
 
 type dataType = {
   temperature: number,

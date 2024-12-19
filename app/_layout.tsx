@@ -11,7 +11,7 @@ import { ref, onValue, query, orderByChild, startAt, endBefore, get, set } from 
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { BrownTheme } from '@/constants/BrownTheme';
-import { addNotificationReceivedListener, addNotificationResponseReceivedListener, AndroidImportance, EventSubscription, getDevicePushTokenAsync, getExpoPushTokenAsync, getPermissionsAsync, Notification, removeNotificationSubscription, requestPermissionsAsync, setNotificationChannelAsync } from 'expo-notifications';
+import { addNotificationReceivedListener, addNotificationResponseReceivedListener, AndroidImportance, EventSubscription, getDevicePushTokenAsync, getExpoPushTokenAsync, getPermissionsAsync, Notification, removeNotificationSubscription, requestPermissionsAsync, scheduleNotificationAsync, setNotificationCategoryAsync, setNotificationChannelAsync, setNotificationHandler } from 'expo-notifications';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import { db } from '@/firebaseConfig';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,7 +31,7 @@ async function registerForPushNotificationsAsync() {
       name: 'default',
       importance: AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
+      lightColor: '#ff0000',
     });
   }
 
@@ -58,6 +58,8 @@ async function registerForPushNotificationsAsync() {
         })
       ).data;
 
+      console.log("pushTokenString");
+      console.log(pushTokenString);
       try {
         const dataRef = ref(db, 'pushToken');
         set(dataRef, pushTokenString);
@@ -97,20 +99,14 @@ function RootLayout() {
       .then(token => setExpoPushToken(token ?? ''))
       .catch((error: any) => setExpoPushToken(`${error}`));
 
-    notificationListener.current = addNotificationReceivedListener(notification => {
-      setNotification(notification);
+    const subscription = addNotificationReceivedListener(notification => {
+      // Update the data instead of showing a new notification
+      // setNotificationData(notification.request.content.data);
+      console.log("notification");
+      console.log(notification);
     });
 
-    responseListener.current = addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      notificationListener.current &&
-        removeNotificationSubscription(notificationListener.current);
-      responseListener.current &&
-        removeNotificationSubscription(responseListener.current);
-    };
+    return () => subscription.remove();
   }, []);
 
   if (!loaded) {
