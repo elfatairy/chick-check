@@ -1,1 +1,152 @@
-Kcq$d#mGGznQF64
+#include <Arduino.h> 
+ 
+#if defined(ESP32) 
+#include <WiFi.h> 
+#elif defined(ESP8266) 
+#include <ESP8266WiFi.h> 
+#endif 
+ 
+#include <Firebase_ESP_Client.h> 
+ 
+#include <ArduinoJson.h> 
+ 
+#include <DHT.h> 
+#define DHT_SENSOR_PIN 18 
+#define DHT_SENSOR_TYPE DHT22 
+DHT dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE); 
+ 
+int MQdata = 34; 
+float MQresult = 0; 
+int Buzzer = 4; 
+int Buzzer2 = 5; 
+ 
+int ldrPin = 32; 
+ 
+// #include "addons/TokenHelper.h" 
+// #include "addons/RTDBHelper.h" 
+ 
+// Insert Firebase project API Key 
+#define API_KEY "AIzaSyAdL9nDk4Ql8ieFHef3johCIwmqykLSOOE" 
+ 
+// Insert RTDB URLefine the RTDB URL */ 
+#define DATABASE_URL "chickcheck-5a2dc-default-rtdb.firebaseio.com" 
+ 
+//Define Firebase Data object 
+FirebaseData fbdo; 
+ 
+FirebaseAuth auth; 
+FirebaseConfig config; 
+ 
+void setup() { 
+  Serial.begin(115200); 
+  WiFi.begin("MooN", "rnm305@stem"); 
+  Serial.print("Connecting to Wi-Fi"); 
+  while (WiFi.status() != WL_CONNECTED) { 
+    Serial.print("."); 
+    delay(300); 
+  } 
+  Serial.println(); 
+  Serial.print("Connected with IP: "); 
+  Serial.println(WiFi.localIP()); 
+  Serial.println(); 
+ 
+  config.api_key = API_KEY; 
+  config.database_url = DATABASE_URL; 
+ 
+  /* Sign up */ 
+  if (Firebase.signUp(&config, &auth, "", "")) { 
+    Serial.println("ok"); 
+  } else { 
+    Serial.printf("%s\n", config.signer.signupError.message.c_str()); 
+  } 
+ 
+  /* Assign the callback function for the long running token generation task */ 
+  // config.token_status_callback = tokenStatusCallback;  //see addons/TokenHelper.h 
+ 
+  Firebase.begin(&config, &auth); 
+  Firebase.reconnectWiFi(true); 
+ 
+  dht_sensor.begin(); 
+  pinMode(MQdata, INPUT); 
+  pinMode(Buzzer, OUTPUT); 
+  pinMode(Buzzer2, OUTPUT); 
+} 
+ 
+void loop() { 
+  if (Firebase.ready()) { 
+    // Write an Int number on the database path test/int 
+      int8_t humi = dht_sensor.readHumidity(); 
+      int16_t temperature_C = dht_sensor.readTemperature(); 
+     
+    if (isnan(temperature_C) || isnan(humi)) { 
+      Serial.println("Failed to read from DHT sensor!"); 
+    } else { 
+      Serial.print("Humidity: "); 
+      Serial.print(humi); 
+      Serial.print("%  |  Temperature: "); 
+      Serial.print(temperature_C); 
+      Serial.print("°C  ~  "); 
+    } 
+ 
+    // Control buzzer based on temperature 
+    if (temperature_C < 18 | temperature_C > 25) { 
+      digitalWrite(Buzzer, LOW); 
+    } else { 
+      digitalWrite(Buzzer, HIGH); 
+    } 
+ 
+    MQresult = analogRead(MQdata) / 1000.0; 
+    if (MQresult > 25) { 
+      digitalWrite(Buzzer2, LOW); 
+    } else { 
+      digitalWrite(Buzzer2, HIGH); 
+    } 
+ 
+    Serial.print("Ammonia Level: "); 
+    Serial.print(MQresult); 
+ 
+    int lux = analogRead(ldrPin) * (50 / 1023.0); 
+    Serial.print(" | Measured lux: "); 
+    Serial.println(lux); 
+ 
+    FirebaseJson json; 
+    json.set("timestamp/.sv", "timestamp"); 
+    json.set("temperature", temperature_C); 
+    json.set("humidity", humi); 
+    json.set("amonia", MQresult); 
+ 
+    if (Firebase.RTDB.pushJSON(&fbdo, "data", &json)) { 
+      Serial.println("PASSED DATA"); 
+    } else { 
+      Serial.println("REASON: " + fbdo.errorReason()); 
+    } 
+ 
+    if (Firebase.RTDB.setFloat(&fbdo, "light", lux)) { 
+      Serial.println("PASSED light"); 
+    } else { 
+      Serial.println("REASON: " + fbdo.errorReason()); 
+    } 
+ 
+    if (Firebase.RTDB.setFloat(&fbdo, "temperature", temperature_C)) { 
+      Serial.println("PASSED temperature"); 
+    } else { 
+      Serial.println("REASON: " + fbdo.errorReason()); 
+    } 
+
+    if (Firebase.RTDB.setFloat(&fbdo, "humid", humi)) { 
+      Serial.println("PASSED humi"); 
+    } else { 
+      Serial.println("REASON: " + fbdo.errorReason()); 
+    } 
+
+    if (Firebase.RTDB.setFloat(&fbdo, "ammonia", MQresult)) { 
+      Serial.println("PASSED amonia"); 
+    } else { 
+      Serial.println("REASON: " + fbdo.errorReason()); 
+    } 
+
+    delay(30000); 
+  } else { 
+    delay(1000); 
+  } 
+}
