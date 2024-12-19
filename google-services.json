@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "159804512638",
+    "firebase_url": "https://chickcheck-5a2dc-default-rtdb.firebaseio.com",
+    "project_id": "chickcheck-5a2dc",
+    "storage_bucket": "chickcheck-5a2dc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159804512638:android:6e69a3de0c3128ddc2fb2f",
+        "android_client_info": {
+          "package_name": "com.chickcheck.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHwFLMO4utJ6i2TVJPqkFGSYhLSg0Fabk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159804512638:android:5940fc37cef3ac8bc2fb2f",
+        "android_client_info": {
+          "package_name": "com.omar.chickcheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHwFLMO4utJ6i2TVJPqkFGSYhLSg0Fabk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
