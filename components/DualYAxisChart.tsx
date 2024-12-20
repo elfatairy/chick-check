@@ -99,7 +99,7 @@ const DualYAxisChart = () => {
                         initialSpacing={0}
                         adjustToWidth
                         spacing={normalize(22.5)}
-                        color="#3332c9"
+                        color="#3332c8"
                         yAxisColor="#3332c9"
                         yAxisThickness={2}
                         xAxisLabelTextStyle={{ width: 80, marginLeft: -20, fontSize: normalize(15) }}
