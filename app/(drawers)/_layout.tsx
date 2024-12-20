@@ -7,6 +7,7 @@ import { Layout } from 'react-native-reanimated';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import * as Sharing from 'expo-sharing';
 import axios from 'axios';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function TabLayout() {
   const navigation = useNavigation();
@@ -45,52 +46,56 @@ export default function TabLayout() {
   }, [navigation]); */
 
   return (
-    <Drawer drawerContent={(props) => {
-      return <>
-        <DrawerContentScrollView {...props}>
-          <DrawerItemList {...props}></DrawerItemList>
-          <Pressable
-            style={{ paddingVertical: 15, paddingHorizontal: 17, borderRadius: 40, backgroundColor: bg, opacity: 0.7 }}
-            onTouchStart={() => { setBg('#fff4') }}
-            onTouchEnd={() => { setBg('transparent') }}
-            onPress={share}>
-            <Text style={{
-              color: 'rgb(135, 79, 31)', fontFamily: 'sans-serif-medium',
-              fontWeight: 'normal',
-            }}>Share</Text>
-          </Pressable>
-        </DrawerContentScrollView>
-      </>
-    }} >
-      <Drawer.Screen
-        name="(tabs)"
-        options={{
-          drawerLabel: 'Readings',
-          title: title,
-          headerShadowVisible: false
-        }}
-      />
-      <Drawer.Screen
-        name="aboutproject"
-        options={{
-          drawerLabel: 'About the project',
-          title: 'About the project',
-        }}
-      />
-      <Drawer.Screen
-        name="feedback"
-        options={{
-          drawerLabel: 'Feedback',
-          title: 'Feedback',
-        }}
-      />
-      <Drawer.Screen
-        name="contactus"
-        options={{
-          drawerLabel: 'Contact Us',
-          title: 'Contact Us',
-        }}
-      />
-    </Drawer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer screenOptions={{
+        swipeEnabled: true
+      }} drawerContent={(props) => {
+        return <>
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props}></DrawerItemList>
+            <Pressable
+              style={{ paddingVertical: 15, paddingHorizontal: 17, borderRadius: 40, backgroundColor: bg, opacity: 0.7 }}
+              onTouchStart={() => { setBg('#fff4') }}
+              onTouchEnd={() => { setBg('transparent') }}
+              onPress={share}>
+              <Text style={{
+                color: 'rgb(135, 79, 31)', fontFamily: 'sans-serif-medium',
+                fontWeight: 'normal',
+              }}>Share</Text>
+            </Pressable>
+          </DrawerContentScrollView>
+        </>
+      }} >
+        <Drawer.Screen
+          name="(tabs)"
+          options={{
+            drawerLabel: 'Readings',
+            title: title,
+            headerShadowVisible: false
+          }}
+        />
+        <Drawer.Screen
+          name="aboutproject"
+          options={{
+            drawerLabel: 'About the project',
+            title: 'About the project',
+          }}
+        />
+        <Drawer.Screen
+          name="feedback"
+          options={{
+            drawerLabel: 'Feedback',
+            title: 'Feedback',
+          }}
+        />
+        <Drawer.Screen
+          name="contactus"
+          options={{
+            drawerLabel: 'Contact Us',
+            title: 'Contact Us',
+          }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
