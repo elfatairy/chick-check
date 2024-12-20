@@ -8,6 +8,7 @@ import MonthYearPicker, { CustomInputRef } from '@/components/MonthYearPicker';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useNavigation } from 'expo-router';
 import { normalize } from '@/constants/normalizer';
+import React from 'react';
 
 export default function TabTwoScreen() {
   const [tempData, setTempData] = useState<lineDataItem[] | undefined>([{ "label": "1", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "4", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "7", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "10", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "13", "value": 0 }, { "value": 0 }, { "value": 25.29 }, { "label": "16", "value": 24.97 }, { "value": 0 }, { "value": 0 }, { "label": "19", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "22", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "25", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "28", "value": 0 }, { "value": 0 }, { "value": 0 }]);
@@ -96,7 +97,7 @@ export default function TabTwoScreen() {
           {
             tempData ?
               <LineChart
-                height={120}
+                height={110}
                 data={tempData}
                 thickness={2}
                 hideRules
@@ -134,7 +135,7 @@ export default function TabTwoScreen() {
           {
             humiData ?
               <LineChart
-                height={120}
+                height={110}
                 data={humiData}
                 thickness={2}
                 hideRules
@@ -170,7 +171,7 @@ export default function TabTwoScreen() {
           {
             amoniaData ?
               <LineChart
-                height={120}
+                height={110}
                 data={amoniaData}
                 thickness={2}
                 hideRules

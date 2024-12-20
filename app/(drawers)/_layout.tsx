@@ -45,7 +45,7 @@ export default function TabLayout() {
   }, [navigation]);
 
   return (
-    <Drawer/*  drawerContent={(props) => {
+    <Drawer drawerContent={(props) => {
       return <>
         <DrawerContentScrollView {...props}>
           <DrawerItemList {...props}></DrawerItemList>
@@ -61,7 +61,7 @@ export default function TabLayout() {
           </Pressable>
         </DrawerContentScrollView>
       </>
-    }} */>
+    }} >
       <Drawer.Screen
         name="(tabs)"
         options={{
