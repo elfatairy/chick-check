@@ -26,6 +26,10 @@ export default function TabTwoScreen() {
     getDayData();
   }, [date]);
 
+  return <View>
+    <Text>Loading...</Text>
+  </View>
+
   const getDayData = async () => {
     try {
       const dataRef = ref(db, 'data');

@@ -62,6 +62,10 @@ export default function HomeScreen() {
 
   const BotChart = useCallback(() => <DualYAxisChart />, []);
 
+  return <View>
+    <Text>Loading...</Text>
+  </View>
+
   if (!tempVal || !humidVal || !lightVal || !ammoniaVal) {
     return <View>
       <Text>Loading...</Text>
