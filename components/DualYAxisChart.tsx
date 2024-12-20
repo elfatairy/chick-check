@@ -89,7 +89,7 @@ const DualYAxisChart = () => {
             {
                 amoniaData ?
                     <LineChart
-                        height={180}
+                        height={160}
                         data={amoniaData}
 
                         thickness={2}
