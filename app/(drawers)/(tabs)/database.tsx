@@ -11,6 +11,7 @@ import { db } from '@/firebaseConfig';
 import { DataTable } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import { normalize } from '@/constants/normalizer';
+import React from 'react';
 
 export default function TabTwoScreen() {
   const [date, setDate] = useState<Date>(new Date(2024, 10, 1));
@@ -25,10 +26,6 @@ export default function TabTwoScreen() {
   useEffect(() => {
     getDayData();
   }, [date]);
-
-  return <View>
-    <Text>Loading...</Text>
-  </View>
 
   const getDayData = async () => {
     try {

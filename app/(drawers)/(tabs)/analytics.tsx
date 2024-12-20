@@ -68,10 +68,6 @@ export default function TabTwoScreen() {
     }
   }
 
-  return <View>
-    <Text>Loading...</Text>
-  </View>
-
   useEffect(() => {
     const now = new Date();
     getMonthData(now.getFullYear(), now.getMonth());
