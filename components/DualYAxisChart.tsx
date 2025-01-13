@@ -19,13 +19,14 @@ const DualYAxisChart = () => {
     const getLastMonthData = async () => {
         const now = new Date();
         console.log("Fetching");
-        const snapshot = await get(ref(db, `months/${now.getMonth()}`));
+        const snapshot = await get(ref(db, `months/${(now.getMonth() + 11) % 12 + 1}`));
 
         console.log('snapshot retrieved');
 
         if (snapshot.exists()) {
             console.log("exists");
             const data = snapshot.val();
+            console.log(data);
 
             const tArr = new Array(15);
             const aArr = new Array(15);
@@ -43,7 +44,7 @@ const DualYAxisChart = () => {
                     aArr[i].value = (data.amonia[i] + data.amonia[i + 1]) / 2;
                 }
                 if (i % 4 == 3) {
-                    aArr[i].label = `${i * 2 + 1} ${monthNames[now.getMonth() - 1]} `;
+                    aArr[i].label = `${i * 2 + 1} ${monthNames[(now.getMonth() + 11) % 12]} `;
                     aArr[i].showXAxisIndex = true
                 }
             }

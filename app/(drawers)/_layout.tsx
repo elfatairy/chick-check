@@ -21,7 +21,7 @@ export default function TabLayout() {
     })
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     const unsubscribe = navigation.addListener('state', (e) => {
       console.log(e.data);
       if (e.data.state.index == 0) {
@@ -43,7 +43,7 @@ export default function TabLayout() {
     });
 
     return unsubscribe;
-  }, [navigation]); */
+  }, [navigation]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
