@@ -1,20 +1,14 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import {
-    LineChart,
-    BarChart,
-    lineDataItem,
-} from 'react-native-gifted-charts';
-import { ref, onValue, query, orderByChild, startAt, endBefore, get, onChildAdded } from "@firebase/database";
+import { useEffect, useState } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+import { LineChart, lineDataItem } from 'react-native-gifted-charts';
+import { ref, get, onChildAdded } from "firebase/database";
 import { db } from '@/firebaseConfig';
-import { router } from 'expo-router';
 import { normalize } from '@/constants/normalizer';
 
 const DualYAxisChart = () => {
     const [tempData, setTempData] = useState<lineDataItem[] | undefined>();
     const [amoniaData, setAmoniaData] = useState<lineDataItem[] | undefined>();
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const [showGraph, setShowGraph] = useState(false);
 
     const getLastMonthData = async () => {
         const now = new Date();

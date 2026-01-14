@@ -1,10 +1,8 @@
-// This file is a fallback for using MaterialIcons on Android and web.
-
 import { AntDesign, Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { SymbolWeight } from 'expo-symbols';
 import React from 'react';
-import { OpaqueColorValue, StyleProp, TextStyle } from 'react-native';
+import { OpaqueColorValue, StyleProp, Text, TextStyle, View } from 'react-native';
 
 export function IconSymbol({
   name,
@@ -15,7 +13,7 @@ export function IconSymbol({
 }: {
   name: string;
   size?: number;
-  color: string | OpaqueColorValue;
+  color?: string | OpaqueColorValue;
   style?: StyleProp<TextStyle>;
   weight?: SymbolWeight;
   type?: 'MaterialIcons' | 'Entypo' | 'FontAwesome' | 'AntDesign' | 'MaterialCommunityIcons'

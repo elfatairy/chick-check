@@ -1,6 +1,6 @@
-import { View, Text, TextInput, TouchableOpacity, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { ref, onValue, query, orderByChild, startAt, endBefore, get, push } from "@firebase/database";
+import { ref, push } from "firebase/database";
 import { db } from '@/firebaseConfig';
 import { normalize } from '@/constants/normalizer';
 

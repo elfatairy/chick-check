@@ -1,14 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
 import { LineChart, lineDataItem } from 'react-native-gifted-charts';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { db } from '@/firebaseConfig';
-import { ref, query, orderByChild, startAt, endBefore, get, onValue } from "@firebase/database";
+import { ref, get } from "firebase/database";
 import MonthYearPicker, { CustomInputRef } from '@/components/MonthYearPicker';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+// import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useNavigation } from 'expo-router';
 import { normalize } from '@/constants/normalizer';
-import React from 'react';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function TabTwoScreen() {
   const [tempData, setTempData] = useState<lineDataItem[] | undefined>([{ "label": "1", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "4", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "7", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "10", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "13", "value": 0 }, { "value": 0 }, { "value": 25.29 }, { "label": "16", "value": 24.97 }, { "value": 0 }, { "value": 0 }, { "label": "19", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "22", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "25", "value": 0 }, { "value": 0 }, { "value": 0 }, { "label": "28", "value": 0 }, { "value": 0 }, { "value": 0 }]);

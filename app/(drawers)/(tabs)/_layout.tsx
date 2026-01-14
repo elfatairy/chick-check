@@ -1,14 +1,15 @@
 import { Tabs, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+// import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { NavigationProp } from '@react-navigation/native';
 import RootLayout from '@/app/_layout';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 type TabParamList = {
   index: undefined;
@@ -41,7 +42,7 @@ export default function TabLayout() {
         name="database"
         options={{
           title: 'Database',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="exclefile1" type='AntDesign' color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="table" type='FontAwesome' color={color} />,
           tabBarShowLabel: false,
           
         }}

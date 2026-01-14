@@ -1,17 +1,12 @@
-import { StyleSheet, Image, Platform, Text, TouchableOpacity, FlatList } from 'react-native';
-
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { StyleSheet, Text, TouchableOpacity, FlatList, View } from 'react-native';
+// import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useEffect, useState } from 'react';
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { View } from 'react-native';
-import { ref, query, orderByChild, startAt, endBefore, get, onValue } from "@firebase/database";
+import { ref, query, orderByChild, startAt, endBefore, get } from "firebase/database";
 import { db } from '@/firebaseConfig';
 import { DataTable } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
 import { normalize } from '@/constants/normalizer';
-import React from 'react';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function TabTwoScreen() {
   const [date, setDate] = useState<Date>(new Date(2024, 10, 1));

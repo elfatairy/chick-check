@@ -1,22 +1,11 @@
-import { Image, StyleSheet, Platform, Text, View, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, Text, View } from 'react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { db } from "../../../firebaseConfig";
-import { ref, onValue, query, orderByChild, startAt, endBefore, get } from "@firebase/database";
+import { ref, onValue } from "firebase/database";
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
-import { LineChart, LineChartBicolor, lineDataItem } from 'react-native-gifted-charts';
 import DualYAxisChart from '@/components/DualYAxisChart';
 import { normalize } from '@/constants/normalizer';
-import React from 'react';
-import { scheduleNotificationAsync } from 'expo-notifications';
-
-type dataType = {
-  temperature: number,
-  humidity: number,
-  amonia: number,
-  timestamp: number
-}
 
 export default function HomeScreen() {
   const [lightVal, setLightVal] = useState<number | undefined>();
@@ -142,13 +131,13 @@ const styles = StyleSheet.create({
     paddingBottom: 25
   },
   circleOuter: {
-    borderRadius: "50%",
+    borderRadius: 9999,
     backgroundColor: "#f00",
     aspectRatio: 1,
     padding: 18
   },
   circleInner: {
-    borderRadius: "50%",
+    borderRadius: 9999,
     backgroundColor: Colors.brown.card,
     height: "100%",
     justifyContent: 'center',
@@ -159,7 +148,6 @@ const styles = StyleSheet.create({
   icon: {
   },
   circleContent: {
-
   },
   textLabel: {
     fontSize: normalize(20),
@@ -182,7 +170,6 @@ const styles = StyleSheet.create({
     borderColor: "#c1a07e",
     backgroundColor: "#fefae0",
     padding: 10,
-    // width: "48%",
     borderRadius: 10,
     flexDirection: 'row',
     gap: 10,

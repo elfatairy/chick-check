@@ -3,18 +3,15 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { Component, ReactNode, useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import 'react-native-reanimated';
 import * as Device from 'expo-device';
 import Constants from 'expo-constants';
-import { ref, onValue, query, orderByChild, startAt, endBefore, get, set } from "@firebase/database";
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { ref, set } from "firebase/database";
 import { BrownTheme } from '@/constants/BrownTheme';
-import { addNotificationReceivedListener, addNotificationResponseReceivedListener, AndroidImportance, EventSubscription, getDevicePushTokenAsync, getExpoPushTokenAsync, getPermissionsAsync, Notification, removeNotificationSubscription, requestPermissionsAsync, scheduleNotificationAsync, setNotificationCategoryAsync, setNotificationChannelAsync, setNotificationHandler } from 'expo-notifications';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { addNotificationReceivedListener, AndroidImportance, getExpoPushTokenAsync, getPermissionsAsync, requestPermissionsAsync, setNotificationChannelAsync } from 'expo-notifications';
+import { Platform } from 'react-native';
 import { db } from '@/firebaseConfig';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -81,12 +78,6 @@ function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState<Notification | undefined>(
-    undefined
-  );
-  const notificationListener = useRef<EventSubscription>();
-  const responseListener = useRef<EventSubscription>();
 
   useEffect(() => {
     if (loaded) {
@@ -95,13 +86,9 @@ function RootLayout() {
   }, [loaded]);
 
   useEffect(() => {
-    registerForPushNotificationsAsync()
-      .then(token => setExpoPushToken(token ?? ''))
-      .catch((error: any) => setExpoPushToken(`${error}`));
+    registerForPushNotificationsAsync();
 
     const subscription = addNotificationReceivedListener(notification => {
-      // Update the data instead of showing a new notification
-      // setNotificationData(notification.request.content.data);
       console.log("notification");
       console.log(notification);
     });
